@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert Bests Social Casino Games Platform - Spin, Win & Shine Like Vegas!</title>
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --vegas-red: #DC143C;
+            --vegas-gold: #FFD700;
+            --vegas-dark-gold: #B8860B;
+            --vegas-black: #0A0A0A;
+            --vegas-dark: #1A1A1A;
+            --vegas-glow: rgba(220, 20, 60, 0.8);
+            --vegas-gold-glow: rgba(255, 215, 0, 0.6);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--vegas-black) 0%, var(--vegas-dark) 50%, var(--vegas-black) 100%);
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><defs><pattern id="casino" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="2" fill="rgba(255,215,0,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(220,20,60,0.1)"/><rect x="50" y="50" width="10" height="10" fill="rgba(255,215,0,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23casino)"/></svg>');
+            opacity: 0.3;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--vegas-gold);
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Lobster', cursive;
+            font-size: 2rem;
+            color: var(--vegas-gold);
+            text-shadow: 0 0 20px var(--vegas-gold-glow), 0 0 40px var(--vegas-gold-glow);
+            animation: flicker 3s infinite;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-text {
+            font-family: 'Lobster', cursive;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--vegas-gold);
+            text-shadow: 0 0 10px var(--vegas-gold-glow);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--vegas-dark);
+            border: 1px solid var(--vegas-gold);
+            border-radius: 5px;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--vegas-gold);
+            padding-left: 2rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--vegas-gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .marquee-banner {
+            background: linear-gradient(90deg, var(--vegas-red) 0%, var(--vegas-gold) 50%, var(--vegas-red) 100%);
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        .marquee-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: shine 3s infinite;
+        }
+
+        .hero-title {
+            font-family: 'Lobster', cursive;
+            font-size: 4rem;
+            color: var(--vegas-gold);
+            text-shadow: 0 0 30px var(--vegas-gold-glow), 0 0 60px var(--vegas-gold-glow);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .slot-banner {
+            background: var(--vegas-dark);
+            border: 2px solid var(--vegas-gold);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem auto;
+            max-width: 800px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slot-reels {
+            display: flex;
+            justify-content: space-around;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .slot-reel {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--vegas-red) 0%, var(--vegas-dark) 100%);
+            border: 3px solid var(--vegas-gold);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: spin 3s infinite;
+        }
+
+        .slot-reel:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .slot-reel:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        /* Sections */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-family: 'Lobster', cursive;
+            font-size: 3rem;
+            color: var(--vegas-gold);
+            text-align: center;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 20px var(--vegas-gold-glow);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--vegas-gold), transparent);
+            box-shadow: 0 0 10px var(--vegas-gold-glow);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid var(--vegas-gold);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+            border-color: var(--vegas-red);
+        }
+
+        .feature-card:hover::before {
+            animation: shine-sweep 1s ease;
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.5rem;
+            color: var(--vegas-gold);
+            margin-bottom: 1rem;
+        }
+
+        .feature-text {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--vegas-red) 0%, var(--vegas-gold) 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--vegas-gold);
+            color: var(--vegas-gold);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid var(--vegas-gold);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--vegas-gold);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.5rem;
+        }
+
+        .faq-answer.active {
+            max-height: 500px;
+            padding: 1.5rem;
+        }
+
+        .faq-answer p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--vegas-black);
+            border-top: 2px solid var(--vegas-gold);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Pacifico', cursive;
+            color: var(--vegas-gold);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--vegas-gold);
+            padding-left: 5px;
+        }
+
+        .footer-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            color: #888;
+        }
+
+        .footer-redirects {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .footer-redirects a {
+            color: var(--vegas-gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .footer-redirects a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            text-shadow: 0 0 10px var(--vegas-gold-glow);
+        }
+
+        /* Age Verification Modal */
+        .age-modal, .cookie-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .age-modal.active, .cookie-modal.active {
+            display: flex;
+        }
+
+        .age-modal-content, .cookie-modal-content {
+            background: #2D1B4E;
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            border: 5px solid var(--vegas-gold);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.5);
+            position: relative;
+        }
+
+        .age-modal-content h2 {
+            color: var(--vegas-gold);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Pacifico', cursive;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .cookie-modal-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Pacifico', cursive;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .cookie-modal-content h2 .cookie-text {
+            color: var(--vegas-gold);
+        }
+
+        .cookie-modal-content h2 .policy-text {
+            color: #fff;
+        }
+
+        .cookie-icon {
+            font-size: 2.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .age-modal-content p, .cookie-modal-content p {
+            color: #fff;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .age-modal-content a {
+            color: var(--vegas-gold);
+            text-decoration: underline;
+        }
+
+        .age-modal-buttons, .cookie-modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .age-btn, .cookie-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .age-btn-yes {
+            background: linear-gradient(135deg, var(--vegas-red) 0%, var(--vegas-gold) 100%);
+            color: #fff;
+        }
+
+        .age-btn-no {
+            background: #2D1B4E;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        .cookie-btn-accept {
+            background: var(--vegas-gold);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .cookie-btn-decline {
+            background: #2D1B4E;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        .age-btn:hover, .cookie-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .age-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .age-18-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: #DC143C;
+            border-radius: 50%;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.5rem;
+            position: relative;
+            margin-right: 1rem;
+        }
+
+        .age-18-icon::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, transparent 40%, #fff 50%, transparent 60%);
+            transform: rotate(-45deg);
+        }
+
+        /* Animations */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.8); }
+        }
+
+        @keyframes shine {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shine-sweep {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            .marquee-text {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-menu {
+                gap: 1rem;
+            }
+            .nav-link {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--vegas-dark);
+                flex-direction: column;
+                padding: 2rem;
+                transition: left 0.3s ease;
+                border-top: 2px solid var(--vegas-gold);
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                margin-left: 1rem;
+                margin-top: 0.5rem;
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+            .marquee-text {
+                font-size: 1.5rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .slot-reels {
+                flex-direction: column;
+                align-items: center;
+            }
+            .slot-reel {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+            .logo {
+                font-size: 1.5rem;
+            }
+            .hero {
+                padding: 2rem 1rem;
+            }
+            .hero-title {
+                font-size: 1.75rem;
+            }
+            .marquee-text {
+                font-size: 1.2rem;
+            }
+            .section {
+                padding: 2rem 1rem;
+            }
+            .section-title {
+                font-size: 1.75rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.25rem;
+            }
+            .hero-title {
+                font-size: 1.5rem;
+            }
+            .marquee-text {
+                font-size: 1rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .feature-card {
+                padding: 1.5rem;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Age Verification Modal -->
+    <div id="ageModal" class="age-modal">
+        <div class="age-modal-content">
+            <h2>
+                <div class="age-18-icon">18</div>
+                Age Verification
+            </h2>
+            <p>You must be 18 years or older to access this Social Casino Games platform. This platform is for entertainment purposes only. Virtual coins only.</p>
+            <p><strong>Are you 18 years or older?</strong></p>
+            <div class="age-modal-buttons">
+                <button class="age-btn age-btn-yes" onclick="verifyAge(true)">Yes, I am 18+</button>
+                <button class="age-btn age-btn-no" onclick="verifyAge(false)">No, I am under 18</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Policy Modal -->
+    <div id="cookieModal" class="cookie-modal">
+        <div class="cookie-modal-content">
+            <h2>
+                <span class="cookie-icon">🍪</span>
+                <span class="cookie-text">Cookie</span>
+                <span class="policy-text">Policy</span>
+            </h2>
+            <p>We use cookies to enhance your experience, analyze site usage, and assist in our marketing efforts. By clicking "Accept", you consent to our use of cookies.</p>
+            <p>You can learn more about our cookie policy in our <a href="privacy.html">Privacy Policy</a>.</p>
+            <div class="cookie-modal-buttons">
+                <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Accept</button>
+                <button class="cookie-btn cookie-btn-decline" onclick="declineCookies()">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="./images/logo.png" alt="Expert Bests Logo">
+                <span class="logo-text">Expert Bests</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a href="slots.html" class="nav-link">Slots</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="slots.html" class="dropdown-item">Featured Games</a></li>
+                        <li><a href="slot-game.html" class="dropdown-item">Play Demo</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="tournaments.html" class="nav-link">Tournaments</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="weekly-tournaments.html" class="dropdown-item">Weekly Challenges</a></li>
+                        <li><a href="seasonal-tournaments.html" class="dropdown-item">Seasonal Championships</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="vip-club.html" class="nav-link">VIP Club</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="vip-rewards.html" class="dropdown-item">VIP Rewards</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="promotions.html" class="nav-link">Promotions</a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link">Support</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="marquee-banner">
+            <div class="marquee-text">🎲 Expert Bests Social Casino Games Platform – Spin, Win & Shine! 🎰</div>
+        </div>
+        <h1 class="hero-title">Welcome to Expert Bests</h1>
+        <p class="hero-subtitle">Experience the thrill of Las Vegas from the comfort of your home</p>
+        
+        <div class="slot-banner">
+            <h3 style="color: var(--vegas-gold); margin-bottom: 1rem; font-family: 'Pacifico', cursive;">Try Your Luck!</h3>
+            <div class="slot-reels">
+                <div class="slot-reel">🎰</div>
+                <div class="slot-reel">🎲</div>
+                <div class="slot-reel">🃏</div>
+            </div>
+            <p style="color: #ccc; margin-top: 1rem;">Spin the reels and feel the excitement!</p>
+        </div>
+
+        <div style="margin-top: 3rem;">
+            <a href="slots.html" class="btn">Play Now</a>
+            <a href="about.html" class="btn btn-secondary" style="margin-left: 1rem;">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <h2 class="section-title">Why Choose Expert Bests?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎰</div>
+                <h3 class="feature-title">Premium Slot Games</h3>
+                <p class="feature-text">Experience our collection of high-quality social slot games with stunning graphics and engaging gameplay. All games are free to play for entertainment purposes.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3 class="feature-title">Exciting Tournaments</h3>
+                <p class="feature-text">Compete in weekly challenges and seasonal championships. Climb the leaderboards and showcase your skills in our competitive tournaments.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👑</div>
+                <h3 class="feature-title">VIP Rewards Program</h3>
+                <p class="feature-text">Join our exclusive VIP Club and unlock special rewards, bonuses, and personalized experiences. The higher your tier, the better the benefits!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎁</div>
+                <h3 class="feature-title">Daily Promotions</h3>
+                <p class="feature-text">Enjoy daily bonuses, special events, and limited-time offers. Check back regularly to take advantage of our exciting promotions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3 class="feature-title">Safe & Secure</h3>
+                <p class="feature-text">Your privacy and security are our top priorities. We use industry-standard encryption and follow strict data protection protocols.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3 class="feature-title">24/7 Support</h3>
+                <p class="feature-text">Our dedicated support team is available around the clock to assist you with any questions or concerns you may have.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What is Expert Bests Social Casino Games Platform?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Expert Bests Social Casino Games Platform is a social casino platform that offers free-to-play slot games and casino entertainment. It's designed for entertainment purposes only, allowing players to enjoy the thrill of casino games without real money gambling.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Is it free to play?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! All games on Expert Bests Social Casino Games Platform are completely free to play. We provide virtual credits for entertainment purposes, so you can enjoy the casino experience without any financial risk.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do tournaments work?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Our tournaments are competitive events where players compete for top positions on leaderboards. Weekly challenges run every week, while seasonal championships are larger events that span multiple weeks. Points are earned by playing games and achieving milestones.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What are VIP Club benefits?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>VIP Club members enjoy exclusive rewards including bonus credits, special promotions, priority support, access to VIP-only tournaments, and personalized gaming experiences. Membership tiers are based on your activity and engagement level.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I win real money?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>No, Expert Bests Social Casino Games Platform is a social gaming platform for entertainment only. All games use virtual credits and no real money is involved. This ensures a safe and fun gaming experience for everyone.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I contact support?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>You can reach our support team 24/7 through the Support page, contact form, or email. We're here to help with any questions, technical issues, or feedback you may have.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Expert Bests</h3>
+                <p style="color: #ccc; line-height: 1.6;">Experience the excitement of social casino games with our premium platform. Play for fun, compete in tournaments, and enjoy the thrill!</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home</a></li>
+                    <li><a href="slots.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> Slots</a></li>
+                    <li><a href="tournaments.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg> Tournaments</a></li>
+                    <li><a href="vip-club.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> VIP Club</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="terms.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> Terms & Conditions</a></li>
+                    <li><a href="privacy.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg> Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="support.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg> Help Center</a></li>
+                    <li><a href="contact.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> Contact Us</a></li>
+                    <li><a href="promotions.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Promotions</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-redirects">
+            <a href="https://gamblinghelpline.co.nz/" target="_blank" rel="noopener noreferrer">Gambling Helpline NZ</a>
+            <a href="https://responsiblegambling.org/" target="_blank" rel="noopener noreferrer">Responsible Gambling</a>
+            <a href="https://www.health.govt.nz/regulation-legislation/mental-health-and-addiction/gambling-act" target="_blank" rel="noopener noreferrer">NZ Ministry of Health</a>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Expert Bests Social Casino Games Platform.</p>
+            <p><strong>18+ Only</strong> | <strong>No Real Money</strong> | <strong>Play Responsibly</strong></p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                // Bütün FAQ item-ləri bağla
+                faqItems.forEach(faq => {
+                    faq.classList.remove('active');
+                    faq.querySelector('.faq-answer').classList.remove('active');
+                });
+                // Əgər kliklənən item aktiv deyilsə, onu aç
+                if (!isActive) {
+                    item.classList.add('active');
+                    answer.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Entry animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Age Verification
+        function verifyAge(isAdult) {
+            const ageModal = document.getElementById('ageModal');
+            const cookieModal = document.getElementById('cookieModal');
+            
+            if (isAdult) {
+                ageModal.classList.remove('active');
+                localStorage.setItem('ageVerified', 'true');
+                // Show cookie modal after age verification if not accepted yet
+                setTimeout(() => {
+                    if (!localStorage.getItem('cookiesAccepted')) {
+                        cookieModal.classList.add('active');
+                    }
+                }, 500);
+            } else {
+                alert('You must be 18 years or older to access this platform.');
+                window.location.href = 'https://google.com';
+            }
+        }
+
+        // Cookie Policy
+        function acceptCookies() {
+            const cookieModal = document.getElementById('cookieModal');
+            cookieModal.classList.remove('active');
+            localStorage.setItem('cookiesAccepted', 'true');
+        }
+
+        function declineCookies() {
+            const cookieModal = document.getElementById('cookieModal');
+            cookieModal.classList.remove('active');
+            localStorage.setItem('cookiesAccepted', 'declined');
+        }
+
+        // Check if age is already verified on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const ageVerified = localStorage.getItem('ageVerified');
+            const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+            const ageModal = document.getElementById('ageModal');
+            const cookieModal = document.getElementById('cookieModal');
+            
+            // If age is already verified, don't show age modal
+            if (ageVerified === 'true') {
+                ageModal.classList.remove('active');
+                // Show cookie modal only if cookies not accepted yet
+                if (!cookiesAccepted) {
+                    setTimeout(() => {
+                        cookieModal.classList.add('active');
+                    }, 500);
+                }
+            } else {
+                // Show age modal if not verified yet
+                ageModal.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
+

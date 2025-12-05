@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Expert Bests Social Casino Games Platform</title>
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --vegas-red: #DC143C;
+            --vegas-gold: #FFD700;
+            --vegas-dark-gold: #B8860B;
+            --vegas-black: #0A0A0A;
+            --vegas-dark: #1A1A1A;
+            --vegas-glow: rgba(220, 20, 60, 0.8);
+            --vegas-gold-glow: rgba(255, 215, 0, 0.6);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--vegas-black) 0%, var(--vegas-dark) 50%, var(--vegas-black) 100%);
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            opacity: 0.3;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--vegas-gold);
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Lobster', cursive;
+            font-size: 2rem;
+            color: var(--vegas-gold);
+            text-shadow: 0 0 20px var(--vegas-gold-glow), 0 0 40px var(--vegas-gold-glow);
+            animation: flicker 3s infinite;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-text {
+            font-family: 'Lobster', cursive;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--vegas-gold);
+            text-shadow: 0 0 10px var(--vegas-gold-glow);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--vegas-dark);
+            border: 1px solid var(--vegas-gold);
+            border-radius: 5px;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--vegas-gold);
+            padding-left: 2rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--vegas-gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-title {
+            font-family: 'Lobster', cursive;
+            font-size: 3.5rem;
+            color: var(--vegas-gold);
+            text-shadow: 0 0 30px var(--vegas-gold-glow), 0 0 60px var(--vegas-gold-glow);
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            color: #ccc;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-family: 'Lobster', cursive;
+            font-size: 2.5rem;
+            color: var(--vegas-gold);
+            text-align: center;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 20px var(--vegas-gold-glow);
+        }
+
+        .content-box {
+            background: rgba(26, 26, 26, 0.9);
+            border: 2px solid var(--vegas-gold);
+            border-radius: 15px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        .content-box h3 {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.75rem;
+            color: var(--vegas-gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .content-box p {
+            margin-bottom: 1rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-card {
+            background: rgba(26, 26, 26, 0.9);
+            border: 2px solid var(--vegas-gold);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+        }
+
+        .team-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .team-name {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.5rem;
+            color: var(--vegas-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .team-role {
+            color: #ccc;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 2rem;
+            background: transparent;
+            border: 2px solid var(--vegas-gold);
+            color: var(--vegas-gold);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-home:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .footer {
+            background: var(--vegas-black);
+            border-top: 2px solid var(--vegas-gold);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Pacifico', cursive;
+            color: var(--vegas-gold);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--vegas-gold);
+            padding-left: 5px;
+        }
+
+        .footer-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            color: #888;
+        }
+
+        .footer-redirects {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .footer-redirects a {
+            color: var(--vegas-gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .footer-redirects a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            text-shadow: 0 0 10px var(--vegas-gold-glow);
+        }
+
+        
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--vegas-dark);
+                flex-direction: column;
+                padding: 2rem;
+                transition: left 0.3s ease;
+                border-top: 2px solid var(--vegas-gold);
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                margin-left: 1rem;
+                margin-top: 0.5rem;
+            }
+            .page-title {
+                font-size: 2.5rem;
+            }
+            .content-box {
+                padding: 2rem 1.5rem;
+            }
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="./images/logo.png" alt="Expert Bests Logo">
+                <span class="logo-text">Expert Bests</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a href="slots.html" class="nav-link">Slots</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="slots.html" class="dropdown-item">Featured Games</a></li>
+                        <li><a href="slot-game.html" class="dropdown-item">Play Demo</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="tournaments.html" class="nav-link">Tournaments</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="weekly-tournaments.html" class="dropdown-item">Weekly Challenges</a></li>
+                        <li><a href="seasonal-tournaments.html" class="dropdown-item">Seasonal Championships</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="vip-club.html" class="nav-link">VIP Club</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="vip-rewards.html" class="dropdown-item">VIP Rewards</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="promotions.html" class="nav-link">Promotions</a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link">Support</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <h1 class="page-title">About Expert Bests</h1>
+        <p class="page-subtitle">Discover our story, mission, and the team behind your favorite social casino experience</p>
+    </section>
+
+    <section class="section">
+        <div class="content-box">
+            <h3>Our Story</h3>
+            <p>Expert Bests Social Casino Games Platform was born from a passion for bringing the excitement and glamour of casino gaming to players worldwide. Founded in 2024, we set out to create a premium social casino platform that combines the thrill of casino gaming with the safety and accessibility of free-to-play entertainment.</p>
+            <p>Our journey began with a simple vision: to provide an authentic casino experience without the risks associated with real money gambling. We believe that everyone should be able to enjoy the excitement of casino games in a fun, safe, and responsible environment.</p>
+            <p>Today, Expert Bests has grown into a vibrant community of players who share our passion for gaming, competition, and entertainment. We continue to innovate and expand our offerings, always keeping our players' enjoyment and safety at the heart of everything we do.</p>
+        </div>
+
+        <div class="content-box">
+            <h3>Our Mission</h3>
+            <p>At Expert Bests Social Casino Games Platform, our mission is to deliver the most engaging and entertaining social casino experience possible. We are committed to:</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li>Providing high-quality, free-to-play casino games that capture the essence of Las Vegas</li>
+                <li>Creating a safe and responsible gaming environment for all players</li>
+                <li>Fostering a vibrant community through tournaments, competitions, and social features</li>
+                <li>Continuously innovating and improving our platform based on player feedback</li>
+                <li>Maintaining the highest standards of security, privacy, and fair play</li>
+            </ul>
+        </div>
+
+        <div class="content-box">
+            <h3>What Makes Us Different</h3>
+            <p><strong>Free-to-Play Focus:</strong> All our games are completely free to play. We use virtual credits for entertainment purposes only, ensuring a safe gaming experience for everyone.</p>
+            <p><strong>Premium Quality:</strong> We partner with leading game developers to bring you the highest quality slot games with stunning graphics, engaging gameplay, and exciting features.</p>
+            <p><strong>Community-Driven:</strong> Our tournaments, leaderboards, and social features create a sense of community and friendly competition among players.</p>
+            <p><strong>Responsible Gaming:</strong> We promote responsible gaming practices and provide resources to help players maintain healthy gaming habits.</p>
+            <p><strong>Constant Innovation:</strong> We regularly add new games, features, and events to keep the experience fresh and exciting.</p>
+        </div>
+
+        <h2 class="section-title">Our Team</h2>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-icon">👨‍💼</div>
+                <h3 class="team-name">Leadership Team</h3>
+                <p class="team-role">Vision & Strategy</p>
+                <p style="color: #ccc; font-size: 0.9rem;">Our leadership team brings decades of combined experience in gaming, technology, and entertainment to create the best possible experience for our players.</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-icon">👨‍💻</div>
+                <h3 class="team-name">Development Team</h3>
+                <p class="team-role">Innovation & Technology</p>
+                <p style="color: #ccc; font-size: 0.9rem;">Our talented developers work tirelessly to create smooth, engaging gameplay experiences and implement cutting-edge features that keep players coming back.</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-icon">🎨</div>
+                <h3 class="team-name">Design Team</h3>
+                <p class="team-role">Visual Excellence</p>
+                <p style="color: #ccc; font-size: 0.9rem;">Our creative designers craft stunning visuals, animations, and user interfaces that capture the glamour and excitement of Las Vegas.</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-icon">💬</div>
+                <h3 class="team-name">Support Team</h3>
+                <p class="team-role">Player Care</p>
+                <p style="color: #ccc; font-size: 0.9rem;">Our dedicated support team is available 24/7 to assist players with any questions, concerns, or feedback they may have.</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="index.html" class="back-home">← Back to Home</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Expert Bests</h3>
+                <p style="color: #ccc; line-height: 1.6;">Experience the excitement of social casino games with our premium platform.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home</a></li>
+                    <li><a href="slots.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> Slots</a></li>
+                    <li><a href="weekly-tournaments.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg> Tournaments</a></li>
+                    <li><a href="vip-club.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> VIP Club</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="terms.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> Terms</a></li>
+                    <li><a href="privacy.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg> Privacy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="support.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg> Help</a></li>
+                    <li><a href="contact.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-redirects">
+            <a href="https://gamblinghelpline.co.nz/" target="_blank" rel="noopener noreferrer">Gambling Helpline NZ</a>
+            <a href="https://responsiblegambling.org/" target="_blank" rel="noopener noreferrer">Responsible Gambling</a>
+            <a href="https://www.health.govt.nz/regulation-legislation/mental-health-and-addiction/gambling-act" target="_blank" rel="noopener noreferrer">NZ Ministry of Health</a>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Expert Bests Social Casino Games Platform.</p>
+            <p><strong>18+ Only</strong> | <strong>No Real Money</strong> | <strong>Play Responsibly</strong></p>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        mobileMenuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+    </script>
+</body>
+</html>
+

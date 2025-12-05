@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <title>Slot Game Demo - Expert Bests</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --vegas-red: #DC143C;
+            --vegas-gold: #FFD700;
+            --vegas-dark-gold: #B8860B;
+            --vegas-black: #0A0A0A;
+            --vegas-dark: #1A1A1A;
+            --vegas-glow: rgba(220, 20, 60, 0.8);
+            --vegas-gold-glow: rgba(255, 215, 0, 0.6);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--vegas-black) 0%, var(--vegas-dark) 50%, var(--vegas-black) 100%);
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            opacity: 0.3;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--vegas-gold);
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+
+            font-family: 'Lobster', cursive;
+            font-size: 2rem;
+            color: var(--vegas-gold);
+            text-shadow: 0 0 20px var(--vegas-gold-glow), 0 0 40px var(--vegas-gold-glow);
+            animation: flicker 3s infinite;
+            text-decoration: none;
+        }
+        .logo img {
+            height: 60px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-text {
+            font-family: 'Lobster', cursive;
+        }
+
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--vegas-gold);
+            text-shadow: 0 0 10px var(--vegas-gold-glow);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--vegas-dark);
+            border: 1px solid var(--vegas-gold);
+            border-radius: 5px;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--vegas-gold);
+            padding-left: 2rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--vegas-gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .game-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--vegas-gold);
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .game-title {
+            font-family: 'Lobster', cursive;
+            font-size: 3rem;
+            color: var(--vegas-gold);
+            text-shadow: 0 0 30px var(--vegas-gold-glow);
+            margin-bottom: 1rem;
+        }
+
+        .game-wrapper {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .game-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 15px;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border-radius: 15px;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 215, 0, 0.3);
+            border-top: 5px solid var(--vegas-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .loading-text {
+            color: var(--vegas-gold);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .control-button {
+            background: linear-gradient(145deg, #34495e, #2c3e50);
+            color: white;
+            border: 2px solid var(--vegas-gold);
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .control-button:hover {
+            background: linear-gradient(145deg, var(--vegas-gold), #f39c12);
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        .fullscreen-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 10000;
+        }
+
+        .fullscreen-overlay.active {
+            display: block;
+        }
+
+        .fullscreen-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .fullscreen-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--vegas-gold);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            z-index: 10001;
+        }
+
+        .fullscreen-close:hover {
+            background: var(--vegas-red);
+            color: #fff;
+        }
+
+        .back-home {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: transparent;
+            border: 2px solid var(--vegas-gold);
+            color: var(--vegas-gold);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-home:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .footer {
+            background: var(--vegas-black);
+            border-top: 2px solid var(--vegas-gold);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Pacifico', cursive;
+            color: var(--vegas-gold);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--vegas-gold);
+            padding-left: 5px;
+        }
+
+        .footer-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            color: #888;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--vegas-dark);
+                flex-direction: column;
+                padding: 2rem;
+                transition: left 0.3s ease;
+                border-top: 2px solid var(--vegas-gold);
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                margin-left: 1rem;
+                margin-top: 0.5rem;
+            }
+            .game-title {
+                font-size: 2rem;
+            }
+            .game-wrapper {
+                margin: 1rem 0;
+            }
+            .game-controls {
+                gap: 0.5rem;
+            }
+            .control-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    
+        .footer-redirects {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .footer-redirects a {
+            color: var(--vegas-gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .footer-redirects a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            text-shadow: 0 0 10px var(--vegas-gold-glow);
+        }
+
+</style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="./images/logo.png" alt="Expert Bests Logo">
+                <span class="logo-text">Expert Bests</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a href="slots.html" class="nav-link">Slots</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="slots.html" class="dropdown-item">Featured Games</a></li>
+                        <li><a href="slot-game.html" class="dropdown-item">Play Demo</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="tournaments.html" class="nav-link">Tournaments</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="weekly-tournaments.html" class="dropdown-item">Weekly Challenges</a></li>
+                        <li><a href="seasonal-tournaments.html" class="dropdown-item">Seasonal Championships</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="vip-club.html" class="nav-link">VIP Club</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="vip-rewards.html" class="dropdown-item">VIP Rewards</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="promotions.html" class="nav-link">Promotions</a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link">Support</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="game-container">
+        <div class="game-header">
+            <h1 class="game-title">Slot Game Demo</h1>
+        </div>
+        <div class="game-wrapper">
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Loading Olympus Wins...</div>
+            </div>
+            <iframe 
+                id="gameFrame"
+                class="game-iframe"
+                src="https://released.playngonetwork.com/casino/ContainerLauncher?pid=2&gid=reactoonz100&lang=en_GB&practice=1&channel=desktop&demo=2"
+                allow="fullscreen"
+                allowfullscreen>
+            </iframe>
+        </div>
+        <div class="game-controls">
+            <button class="control-button" onclick="refreshGame()">🔄 Refresh</button>
+            <button class="control-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <button class="control-button" onclick="toggleSound()">🔊 Sound</button>
+        </div>
+        <div class="fullscreen-overlay" id="fullscreenOverlay">
+            <button class="fullscreen-close" onclick="exitFullscreen()">✕ Exit Fullscreen</button>
+            <iframe id="fullscreenFrame" class="fullscreen-iframe" allow="fullscreen" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Expert Bests</h3>
+                <p style="color: #ccc; line-height: 1.6;">Experience the excitement of Las Vegas with our premium social casino games.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home</a></li>
+                    <li><a href="slots.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> Slots</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="terms.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> Terms</a></li>
+                    <li><a href="privacy.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg> Privacy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="support.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg> Help</a></li>
+                    <li><a href="contact.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> Contact</a></li>
+                </ul>
+            </div>
+        </div>
+                <div class="footer-redirects">
+            <a href="https://gamblinghelpline.co.nz/" target="_blank" rel="noopener noreferrer">Gambling Helpline NZ</a>
+            <a href="https://responsiblegambling.org/" target="_blank" rel="noopener noreferrer">Responsible Gambling</a>
+            <a href="https://www.health.govt.nz/regulation-legislation/mental-health-and-addiction/gambling-act" target="_blank" rel="noopener noreferrer">NZ Ministry of Health</a>
+        </div>
+<div class="footer-bottom">
+            <p>&copy; 2025 Expert Bests Social Casino Games Platform.</p>
+            <p><strong>18+ Only</strong> | <strong>No Real Money</strong> | <strong>Play Responsibly</strong></p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        mobileMenuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Game state
+        let gameLoaded = false;
+        let soundEnabled = true;
+
+        // Handle iframe loading
+        document.getElementById('gameFrame').addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').style.display = 'none';
+                gameLoaded = true;
+            }, 2000);
+        });
+
+        // Refresh game function
+        function refreshGame() {
+            const gameFrame = document.getElementById('gameFrame');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            loadingOverlay.style.display = 'flex';
+            gameLoaded = false;
+            
+            gameFrame.src = gameFrame.src;
+        }
+
+        // Fullscreen functionality
+        function toggleFullscreen() {
+            const overlay = document.getElementById('fullscreenOverlay');
+            const fullscreenFrame = document.getElementById('fullscreenFrame');
+            const originalFrame = document.getElementById('gameFrame');
+            
+            overlay.classList.add('active');
+            fullscreenFrame.src = originalFrame.src;
+            
+            if (overlay.requestFullscreen) {
+                overlay.requestFullscreen();
+            } else if (overlay.webkitRequestFullscreen) {
+                overlay.webkitRequestFullscreen();
+            } else if (overlay.msRequestFullscreen) {
+                overlay.msRequestFullscreen();
+            }
+        }
+
+        function exitFullscreen() {
+            const overlay = document.getElementById('fullscreenOverlay');
+            overlay.classList.remove('active');
+            
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+
+        // Handle ESC key to exit fullscreen
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                exitFullscreen();
+            }
+        });
+
+        // Handle fullscreen change events
+        document.addEventListener('fullscreenchange', function() {
+            if (!document.fullscreenElement) {
+                exitFullscreen();
+            }
+        });
+
+        document.addEventListener('webkitfullscreenchange', function() {
+            if (!document.webkitFullscreenElement) {
+                exitFullscreen();
+            }
+        });
+
+        document.addEventListener('msfullscreenchange', function() {
+            if (!document.msFullscreenElement) {
+                exitFullscreen();
+            }
+        });
+
+        // Sound toggle function
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const button = event.target;
+            button.textContent = soundEnabled ? '🔊 Sound' : '🔇 Sound';
+            
+            try {
+                const gameFrame = document.getElementById('gameFrame');
+                if (gameFrame.contentWindow) {
+                    gameFrame.contentWindow.postMessage({
+                        action: 'toggleSound',
+                        enabled: soundEnabled
+                    }, '*');
+                }
+            } catch (e) {
+                console.log('Cannot control iframe sound due to CORS restrictions');
+            }
+        }
+
+        // Add floating particles effect
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            setInterval(createParticles, 3000);
+        });
+
+        function createParticles() {
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.innerHTML = ['⚡', '💫', '✨', '🌟'][Math.floor(Math.random() * 4)];
+                    particle.style.position = 'fixed';
+                    particle.style.left = Math.random() * window.innerWidth + 'px';
+                    particle.style.top = window.innerHeight + 'px';
+                    particle.style.fontSize = Math.random() * 20 + 15 + 'px';
+                    particle.style.pointerEvents = 'none';
+                    particle.style.zIndex = '1';
+                    particle.style.animation = 'floatUp 4s ease-out forwards';
+                    
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 4000);
+                }, i * 1000);
+            }
+        }
+
+        // Handle error messages from iframe
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'gameError') {
+                console.log('Game error:', event.data.message);
+                document.getElementById('loadingOverlay').innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+                        <div style="color: #dc3545; font-size: 1.2rem; margin-bottom: 1rem;">Game Loading Error</div>
+                        <button onclick="refreshGame()" style="background: var(--vegas-gold); color: #000; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold;">Try Again</button>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
+

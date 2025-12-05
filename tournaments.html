@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <title>Tournaments - Expert Bests</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --vegas-red: #DC143C;
+            --vegas-gold: #FFD700;
+            --vegas-dark-gold: #B8860B;
+            --vegas-black: #0A0A0A;
+            --vegas-dark: #1A1A1A;
+            --vegas-glow: rgba(220, 20, 60, 0.8);
+            --vegas-gold-glow: rgba(255, 215, 0, 0.6);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--vegas-black) 0%, var(--vegas-dark) 50%, var(--vegas-black) 100%);
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            opacity: 0.3;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--vegas-gold);
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+
+            font-family: 'Lobster', cursive;
+            font-size: 2rem;
+            color: var(--vegas-gold);
+            text-shadow: 0 0 20px var(--vegas-gold-glow), 0 0 40px var(--vegas-gold-glow);
+            animation: flicker 3s infinite;
+            text-decoration: none;
+        }
+        .logo img {
+            height: 60px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-text {
+            font-family: 'Lobster', cursive;
+        }
+
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--vegas-gold);
+            text-shadow: 0 0 10px var(--vegas-gold-glow);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--vegas-dark);
+            border: 1px solid var(--vegas-gold);
+            border-radius: 5px;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--vegas-gold);
+            padding-left: 2rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--vegas-gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-title {
+            font-family: 'Lobster', cursive;
+            font-size: 3.5rem;
+            color: var(--vegas-gold);
+            text-shadow: 0 0 30px var(--vegas-gold-glow), 0 0 60px var(--vegas-gold-glow);
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            color: #ccc;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-family: 'Lobster', cursive;
+            font-size: 2.5rem;
+            color: var(--vegas-gold);
+            text-align: center;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 20px var(--vegas-gold-glow);
+        }
+
+        .tournament-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .tournament-type-card {
+            background: rgba(26, 26, 26, 0.9);
+            border: 2px solid var(--vegas-gold);
+            border-radius: 15px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tournament-type-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .tournament-type-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+            border-color: var(--vegas-red);
+        }
+
+        .tournament-type-card:hover::before {
+            animation: shine-sweep 1s ease;
+        }
+
+        .type-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .type-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.75rem;
+            color: var(--vegas-gold);
+            margin-bottom: 1rem;
+        }
+
+        .type-description {
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .type-features {
+            list-style: none;
+            text-align: left;
+            margin: 1.5rem 0;
+            color: #ccc;
+        }
+
+        .type-features li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .type-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--vegas-gold);
+            font-weight: bold;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--vegas-red) 0%, var(--vegas-gold) 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.5);
+        }
+
+        .info-section {
+            background: rgba(26, 26, 26, 0.9);
+            border: 2px solid var(--vegas-gold);
+            border-radius: 15px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-section h3 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2rem;
+            color: var(--vegas-gold);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-item h4 {
+            color: var(--vegas-gold);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .info-item p {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 2rem;
+            background: transparent;
+            border: 2px solid var(--vegas-gold);
+            color: var(--vegas-gold);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-home:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .footer {
+            background: var(--vegas-black);
+            border-top: 2px solid var(--vegas-gold);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Pacifico', cursive;
+            color: var(--vegas-gold);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--vegas-gold);
+            padding-left: 5px;
+        }
+
+        .footer-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            color: #888;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes shine-sweep {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        @media (max-width: 1024px) {
+            .page-title {
+                font-size: 3rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+            .nav-menu {
+                gap: 1rem;
+            }
+            .nav-link {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            .nav-container {
+                padding: 0 1rem;
+            }
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--vegas-dark);
+                flex-direction: column;
+                padding: 2rem 1rem;
+                transition: left 0.3s ease;
+                border-top: 2px solid var(--vegas-gold);
+                overflow-y: auto;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                margin-left: 1rem;
+                margin-top: 0.5rem;
+                border: none;
+                background: rgba(255, 215, 0, 0.05);
+            }
+            .page-header {
+                padding: 2rem 1rem;
+            }
+            .page-title {
+                font-size: 2rem;
+            }
+            .page-subtitle {
+                font-size: 1rem;
+            }
+            .section {
+                padding: 2rem 1rem;
+            }
+            .section-title {
+                font-size: 1.75rem;
+            }
+            .tournament-types {
+                grid-template-columns: 1fr;
+            }
+            .info-section {
+                padding: 2rem 1.5rem;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            .page-title {
+                font-size: 1.75rem;
+            }
+            .page-subtitle {
+                font-size: 0.9rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .tournament-type-card {
+                padding: 2rem 1.5rem;
+            }
+            .type-icon {
+                font-size: 3rem;
+            }
+            .type-title {
+                font-size: 1.5rem;
+            }
+            .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.25rem;
+            }
+            .nav-container {
+                padding: 0 0.75rem;
+            }
+            .page-title {
+                font-size: 1.5rem;
+            }
+            .section-title {
+                font-size: 1.25rem;
+            }
+        }
+    
+        .footer-redirects {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .footer-redirects a {
+            color: var(--vegas-gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .footer-redirects a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            text-shadow: 0 0 10px var(--vegas-gold-glow);
+        }
+
+</style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="./images/logo.png" alt="Expert Bests Logo">
+                <span class="logo-text">Expert Bests</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a href="slots.html" class="nav-link">Slots</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="slots.html" class="dropdown-item">Featured Games</a></li>
+                        <li><a href="slot-game.html" class="dropdown-item">Play Demo</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="tournaments.html" class="nav-link">Tournaments</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="weekly-tournaments.html" class="dropdown-item">Weekly Challenges</a></li>
+                        <li><a href="seasonal-tournaments.html" class="dropdown-item">Seasonal Championships</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="vip-club.html" class="nav-link">VIP Club</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="vip-rewards.html" class="dropdown-item">VIP Rewards</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="promotions.html" class="nav-link">Promotions</a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link">Support</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <h1 class="page-title">Tournaments</h1>
+        <p class="page-subtitle">Compete in exciting tournaments and climb the leaderboards! Win amazing prizes and showcase your skills.</p>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Tournament Types</h2>
+        <div class="tournament-types">
+            <div class="tournament-type-card">
+                <div class="type-icon">📅</div>
+                <h3 class="type-title">Weekly Challenges</h3>
+                <p class="type-description">Join our weekly tournaments that run every week with fresh challenges and exciting prize pools. Perfect for regular players looking for consistent competition.</p>
+                <ul class="type-features">
+                    <li>New challenges every week</li>
+                    <li>Prize pools from 10,000 to 30,000 credits</li>
+                    <li>Multiple tournament formats</li>
+                    <li>Leaderboard rankings</li>
+                    <li>Free entry for all players</li>
+                </ul>
+                <a href="weekly-tournaments.html" class="btn">View Weekly Tournaments</a>
+            </div>
+
+            <div class="tournament-type-card">
+                <div class="type-icon">🏆</div>
+                <h3 class="type-title">Seasonal Championships</h3>
+                <p class="type-description">The ultimate competitive events! Seasonal championships span multiple weeks with massive prize pools and the ultimate bragging rights for champions.</p>
+                <ul class="type-features">
+                    <li>Multi-week competitions</li>
+                    <li>Grand prize pools up to 500,000 credits</li>
+                    <li>Seasonal themes and events</li>
+                    <li>Exclusive rewards for top players</li>
+                    <li>Championship titles and badges</li>
+                </ul>
+                <a href="seasonal-tournaments.html" class="btn">View Seasonal Championships</a>
+            </div>
+
+            <div class="tournament-type-card">
+                <div class="type-icon">⚡</div>
+                <h3 class="type-title">Flash Tournaments</h3>
+                <p class="type-description">Quick-fire tournaments that don't last long! These limited-time events offer fast-paced competition with instant rewards and exciting gameplay.</p>
+                <ul class="type-features">
+                    <li>24-hour duration tournaments</li>
+                    <li>High prize pools up to 100,000 credits</li>
+                    <li>Fast-paced competition</li>
+                    <li>Instant rewards</li>
+                    <li>Surprise announcements</li>
+                </ul>
+                <a href="promotions.html" class="btn">Check Promotions</a>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3>How Tournaments Work</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4>🎯 Join & Play</h4>
+                    <p>Simply join any tournament and start playing your favorite games. Every spin and win contributes to your tournament score.</p>
+                </div>
+                <div class="info-item">
+                    <h4>📊 Earn Points</h4>
+                    <p>Accumulate points by playing games, achieving milestones, and completing challenges. The more you play, the higher you rank!</p>
+                </div>
+                <div class="info-item">
+                    <h4>🏅 Climb Leaderboards</h4>
+                    <p>Watch your position on the leaderboard in real-time. Compete against other players and aim for the top spots.</p>
+                </div>
+                <div class="info-item">
+                    <h4>🎁 Win Prizes</h4>
+                    <p>Top players receive amazing rewards including bonus credits, VIP status, exclusive badges, and special recognition.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3>Tournament Benefits</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4>💰 Big Prize Pools</h4>
+                    <p>Compete for substantial prize pools that grow with participation. The more players, the bigger the rewards!</p>
+                </div>
+                <div class="info-item">
+                    <h4>🎮 Multiple Formats</h4>
+                    <p>Experience different tournament formats including high score challenges, point accumulation, and special event competitions.</p>
+                </div>
+                <div class="info-item">
+                    <h4>👑 VIP Advantages</h4>
+                    <p>VIP members enjoy exclusive tournaments, bonus multipliers, and priority access to special championship events.</p>
+                </div>
+                <div class="info-item">
+                    <h4>🏆 Recognition</h4>
+                    <p>Top performers receive special recognition, exclusive badges, and their names featured on our hall of fame.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="index.html" class="back-home">← Back to Home</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Expert Bests</h3>
+                <p style="color: #ccc; line-height: 1.6;">Experience the excitement of Las Vegas with our premium social casino games.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home</a></li>
+                    <li><a href="slots.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> Slots</a></li>
+                    <li><a href="tournaments.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg> Tournaments</a></li>
+                    <li><a href="vip-club.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> VIP Club</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="terms.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> Terms</a></li>
+                    <li><a href="privacy.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg> Privacy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="support.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg> Help</a></li>
+                    <li><a href="contact.html"><svg class="footer-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> Contact</a></li>
+                </ul>
+            </div>
+        </div>
+                <div class="footer-redirects">
+            <a href="https://gamblinghelpline.co.nz/" target="_blank" rel="noopener noreferrer">Gambling Helpline NZ</a>
+            <a href="https://responsiblegambling.org/" target="_blank" rel="noopener noreferrer">Responsible Gambling</a>
+            <a href="https://www.health.govt.nz/regulation-legislation/mental-health-and-addiction/gambling-act" target="_blank" rel="noopener noreferrer">NZ Ministry of Health</a>
+        </div>
+<div class="footer-bottom">
+            <p>&copy; 2025 Expert Bests Social Casino Games Platform.</p>
+            <p><strong>18+ Only</strong> | <strong>No Real Money</strong> | <strong>Play Responsibly</strong></p>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        mobileMenuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
+
